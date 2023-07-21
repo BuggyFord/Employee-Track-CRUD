@@ -28,7 +28,7 @@ npm i
 ```
 
 ## Usage
-
+Run node index.js to begin prompts and answe questions for database insertion.
 This application is utilizing MYSQL and CRUD operations to create and manage an employee database. It alows for input to be given to track and update information about the vaious branches of the business and to CRUD as needed. 
 
 ## License
