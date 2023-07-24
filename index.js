@@ -42,6 +42,8 @@ function userChoice() {
             addEmployee();
         }else if (answer.decide === 'View All Employees'){
             viewAllEmployees();
+        }else if(answer.decide === 'Update Employee Role'){
+            updateEmployee();
         }
     
     })
@@ -170,7 +172,7 @@ function addEmployee() {
         },
         {
             type:'input',
-            name:'manager',
+            name:'managerID',
             message:'Is this employee a manager?',
         },
         {
@@ -188,7 +190,7 @@ function addEmployee() {
     },
         {
             input:'input',
-            name:'role',
+            name:'roleID',
             message:'What role will this employee have?'
         }
 
@@ -227,7 +229,22 @@ function viewAllEmployees() {
     });
 
 }
-
+function updateEmployee() {
+    db.query("SELECT * FROM employee;", (error, data) => {
+        if(error) {
+            console.log("Error: ", error);
+            throw error;
+        }
+        console.table(data)
+    })
+    db.query("SELECT * FROM role;", (error, data) =>{
+        if(error){
+            console.log("Error: ", error);
+            throw error;
+        }
+        
+    })
+}
 
 // -- makeing requrest to our DATABASE -- //
 // DB connection --> QUERY method (SQL COMMAND, callback eeror first function)
