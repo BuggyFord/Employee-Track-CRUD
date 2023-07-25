@@ -31,9 +31,10 @@ VALUES
 
 INSERT INTO employee(first_name, last_name, manager_id, role_id)
 VALUES
-("Daves", "Nothereman", 7,0),
-("Rebeccas", "Foonsy", 6,0),
-("Mateo", "Sandoval", 4,0),
-("Jerry", "Perry", 8, 1),
-("Halie", "Breeze", 6, 1),
-("Victor", "Rye", 2, 0);
+("Daves", "Nothereman", 0,7),
+("Rebeccas", "Foonsy", 0,7),
+("Mateo", "Sandoval", 0,4),
+("Jerry", "Perry", 1, 5),
+("Halie", "Breeze", 1, 3),
+("Victor", "Rye", 0, 5
+);

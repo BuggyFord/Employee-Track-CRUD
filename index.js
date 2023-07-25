@@ -195,9 +195,15 @@ function addEmployee() {
         }
 
     ]).then(data => {
-
-            // db.query(<THE SQL COMMAND TO OUR DB>, callback())
-            db.query(`INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES ( '${data.first_name}', '${data.last_name}', '${data.manager_id}', '${data.role_id}');`, (error, data) => {
+            let manager_id;
+            if(data.managerID.toLowerCase() == 'no') { // No nO NO no
+                manager_id = 'null';
+            } else {
+                manager_id = 1;
+            }
+            let role_id = 1;
+                // db.query(<THE SQL COMMAND TO OUR DB>, callback())
+            db.query(`INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES ( '${data.first_name}', '${data.last_name}', '${manager_id}', '${role_id}');`, (error, data) => {
                 if(error) {
                     console.log("Error: ", error);
                     throw error;
@@ -230,20 +236,55 @@ function viewAllEmployees() {
 
 }
 function updateEmployee() {
+
     db.query("SELECT * FROM employee;", (error, data) => {
         if(error) {
             console.log("Error: ", error);
             throw error;
         }
         console.table(data)
+        inquirer.prompt([{
+            type: 'input',
+            name: 'employeeID',
+            message: 'Enter the ID of the employee you want to update'
+        },
+        {
+            type: 'list',
+            name: 'userSelection',
+            message: 'What would you like to update?',
+            choices: ['first_name', 'last_name', 'manager_id', 'role_id']
+        },
+        {
+            type: 'input',
+            name: 'updateValue',
+            message: 'What is the new value?'
+        }
+    ]).then(answer => {
+           // db.query(`SELECT * FROM employee WHERE id = ${answer.employeeID};`, (error, data) => {
+           //  })
+           /* db.query(`UPDATE employee SET ${answer.userSelection} = ${answer.updateValue} WHERE id = ${answer.employeeID};`, (error, data) => {
+                if(error) {
+                    throw error;
+                }
+                console.table(data);
+            }) */
+
+            db.query(`UPDATE employee SET ${answer.userSelection} = ? WHERE id = ?;`, [answer.updateValue, answer.employeeID], (error, data) => {
+                if(error) {
+                    throw error;
+                }
+                // console.table(data);
+                viewAllEmployees();
+            })
+        })
     })
-    db.query("SELECT * FROM role;", (error, data) =>{
+  /*  db.query("SELECT * FROM role;", (error, data) =>{
         if(error){
             console.log("Error: ", error);
             throw error;
         }
-        
     })
+    */
 }
 
 // -- makeing requrest to our DATABASE -- //
